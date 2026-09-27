@@ -47,15 +47,18 @@ Prerequisites (Windows 11):
 - Visual Studio 2022 with the C++ workload and **clang-cl** (LLVM component)
 - CMake ≥ 3.20, Ninja, Python 3.11+ with `pycryptodome`
 - Git Bash (for `tools/relift.sh`)
-- A checkout of [ps3recomp](https://github.com/sp00nznet/ps3recomp) at
-  `G:/recomp/ps3` (or set `PS3RECOMP_DIR` for CMake and `PS3RECOMP` for
-  `relift.sh`) with `build-gate/ps3recomp_runtime.lib` built. The checkout's
+- A checkout of [ps3recomp](https://github.com/sp00nznet/ps3recomp). The
+  default path is `G:/recomp/ps3`; elsewhere, set `PS3RECOMP_DIR` (Windows
+  path, for `build.py`) and `PS3RECOMP` (Git Bash path, for `relift.sh`).
+  It needs `build-gate/ps3recomp_runtime.lib` built. The checkout's
   `libs/spurs/cellSpurs.c` needs the Join fix from
   [#185](https://github.com/sp00nznet/ps3recomp/pull/185), and
   `libs/codec/cellSail.c` the `STATE_CHANGED` events from
   [#190](https://github.com/sp00nznet/ps3recomp/pull/190); both
   files are compiled into this port from the checkout, see `CMakeLists.txt`.
-- A key directory for `decrypt_self.py` (the disc EBOOT's `appldr` keys)
+- A SELF decrypter: [`tools/decrypt_self.py`](https://github.com/sp00nznet/twistedmetal/blob/main/tools/decrypt_self.py)
+  from twistedmetal plus a scetool-format key file with the `appldr` keys (not
+  supplied), or RPCS3 (`rpcs3 --decrypt EBOOT.BIN`)
 
 Steps:
 
@@ -64,8 +67,8 @@ Steps:
 2. Decrypt the EBOOT, and put a copy next to the original:
 
    ```bash
-   python ../twistedmetal/tools/decrypt_self.py vfs/PS3_GAME/USRDIR/EBOOT.BIN \
-       --keys ../GT5P/data/keys -o game/EBOOT.elf
+   python path/to/twistedmetal/tools/decrypt_self.py vfs/PS3_GAME/USRDIR/EBOOT.BIN \
+       --keys path/to/keys -o game/EBOOT.elf
    cp game/EBOOT.elf vfs/PS3_GAME/USRDIR/EBOOT.elf
    ```
 
