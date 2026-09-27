@@ -1,0 +1,16 @@
+# Everything below is derived from the game or local-only (repo_rules §3).
+build*/
+game/
+vfs/
+analysis/
+imports.json
+src/recomp/
+src/gen/
+src/spu_gen/
+spu_miss/
+scratch/
+*.map
+*.bin
+*.log
+*.7z
+gamedata/
